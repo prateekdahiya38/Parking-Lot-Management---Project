@@ -9,9 +9,11 @@ import java.util.TreeMap;
 
 public class ParkingLotReposetory {
     private Map<Long,ParkingLot> parkingLots = new TreeMap<>();
-    public Optional<ParkingLot> getParkingLotofGate(Gate gate){
+    public Optional<ParkingLot> getParkingLotOfGate(Gate gate){
         for (ParkingLot parkingLot : parkingLots.values()){
-            return Optional.of(parkingLot);
+            if (parkingLot.getGates().contains(gate)) {
+                return Optional.of(parkingLot);
+            }
         }
         return Optional.empty();
     }

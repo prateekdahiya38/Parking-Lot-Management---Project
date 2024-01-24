@@ -6,8 +6,8 @@ import ParkingLot.reposetories.ParkingLotReposetory;
 import ParkingLot.reposetories.TicketReposetory;
 import ParkingLot.reposetories.VehicleReposetory;
 import ParkingLot.services.TicketService;
-import ParkingLot.spotAssignmentStrategy.RandomSpotAssignmentStrategy;
-import ParkingLot.spotAssignmentStrategy.SpotAssignmentStrategy;
+import ParkingLot.strategies.spotAssignmentStrategy.RandomSpotAssignmentStrategy;
+import ParkingLot.strategies.spotAssignmentStrategy.SpotAssignmentStrategy;
 
 public class ParkingLotApp {
     public static void main(String[] args) {

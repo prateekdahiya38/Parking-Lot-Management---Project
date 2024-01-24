@@ -7,7 +7,7 @@ import ParkingLot.reposetories.GateReposetory;
 import ParkingLot.reposetories.ParkingLotReposetory;
 import ParkingLot.reposetories.TicketReposetory;
 import ParkingLot.reposetories.VehicleReposetory;
-import ParkingLot.spotAssignmentStrategy.SpotAssignmentStrategy;
+import ParkingLot.strategies.spotAssignmentStrategy.SpotAssignmentStrategy;
 
 import java.util.Date;
 import java.util.Optional;
@@ -38,6 +38,8 @@ public class TicketService {
         // operator from gate
         // parking spot from strategy
 
+
+        // finding gate in the reposetory or Database, if not fount throw exception
            Optional<Gate> gateOptional= gateReposetory.findGateById(gateId);
            if (gateOptional.isEmpty()){
                throw new InvalidGateException();
@@ -46,13 +48,12 @@ public class TicketService {
 
 
 
-
+       // finding Current operator on the gate we found from the reposetory
         Operator operator = gate.getCurrentOperator();
 
 
 
-
-
+      // finding vehicle in reposetory or database, if not add the entry of a new vehicle in it
         Vehicle vehicle;
         Optional<Vehicle> vehicleOptional = vehicleReposetory.findVeicleByVehicleNo(vehicleNo);
         if (vehicleOptional.isEmpty()){
@@ -65,21 +66,27 @@ public class TicketService {
         }
 
 
-
-
-
-        Optional<ParkingLot> parkingLotOptional = parkingLotReposetory.getParkingLotofGate(gate);
+      // finding ParkingLot in the reposetory or database by gate, if not found throw exception
+        ParkingLot parkingLot;
+        Optional<ParkingLot> parkingLotOptional = parkingLotReposetory.getParkingLotOfGate(gate);
         if(parkingLotOptional.isEmpty()){
             throw new RuntimeException();
+        }else {
+            parkingLot = parkingLotOptional.get();
         }
+
+
+      // finding Parking spot in the spot assignment strategy
         ParkingSpot parkingSpot;
-        Optional<ParkingSpot> parkingSpotOptional = spotAssignmentStrategy.findSpot(parkingLotOptional.get(),gate,vehicleType);
+        Optional<ParkingSpot> parkingSpotOptional = spotAssignmentStrategy.findSpot(parkingLot,gate,vehicleType);
         if (parkingSpotOptional.isEmpty()){
             throw new NoAvailableParkingSpotException();
         }else {
             parkingSpot = parkingSpotOptional.get();
         }
 
+
+     // generate ticket, and save it in the reposetory and return it to the controller
         Ticket ticket = new Ticket();
         ticket.setGate(gate);
         ticket.setEntryTime(new Date());
