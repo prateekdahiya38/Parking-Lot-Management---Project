@@ -1,11 +1,20 @@
-package ParkingLot.DTOs;
+package ParkingLot.dtos.requestDto;
 
 import ParkingLot.models.VehicleType;
 
 public class GenerateTicketRequestDto {
     private String vehicleNo;
     private VehicleType vehicleType;
-    private Long gateId;
+    private Long parkingLotId;
+
+
+    public Long getParkingLotId() {
+        return parkingLotId;
+    }
+
+    public void setParkingLotId(Long parkingLotId) {
+        this.parkingLotId = parkingLotId;
+    }
 
     public String getVehicleNo() {
         return vehicleNo;
@@ -23,11 +32,4 @@ public class GenerateTicketRequestDto {
         this.vehicleType = vehicleType;
     }
 
-    public Long getGateId() {
-        return gateId;
-    }
-
-    public void setGateId(Long gateId) {
-        this.gateId = gateId;
-    }
 }

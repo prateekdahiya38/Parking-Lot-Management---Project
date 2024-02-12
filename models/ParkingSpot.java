@@ -1,10 +1,8 @@
 package ParkingLot.models;
 
-import java.util.List;
-
 public class ParkingSpot extends BaseModel{
     private int spotNumber;
-    private List<VehicleType> supportedVehicles;
+    private VehicleType supportedVehicle;
     private Vehicle vehicle;
     private SpotStatus spotStatus;
 
@@ -16,12 +14,13 @@ public class ParkingSpot extends BaseModel{
         this.spotNumber = spotNumber;
     }
 
-    public List<VehicleType> getSupportedVehicles() {
-        return supportedVehicles;
+    public VehicleType getSupportedVehicle() {
+
+        return supportedVehicle;
     }
 
-    public void setSupportedVehicles(List<VehicleType> supportedVehicles) {
-        this.supportedVehicles = supportedVehicles;
+    public void setSupportedVehicle(VehicleType supportedVehicle) {
+        this.supportedVehicle = supportedVehicle;
     }
 
     public Vehicle getVehicle() {

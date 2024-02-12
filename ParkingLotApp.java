@@ -1,28 +1,18 @@
 package ParkingLot;
 
-import ParkingLot.controllers.TicketController;
-import ParkingLot.reposetories.GateReposetory;
-import ParkingLot.reposetories.ParkingLotReposetory;
-import ParkingLot.reposetories.TicketReposetory;
-import ParkingLot.reposetories.VehicleReposetory;
-import ParkingLot.services.TicketService;
-import ParkingLot.strategies.spotAssignmentStrategy.RandomSpotAssignmentStrategy;
-import ParkingLot.strategies.spotAssignmentStrategy.SpotAssignmentStrategy;
+import ParkingLot.commands.CommandRegistry;
+
+import java.util.Scanner;
 
 public class ParkingLotApp {
     public static void main(String[] args) {
-        GateReposetory gateReposetory = new GateReposetory();
-        ParkingLotReposetory parkingLotReposetory = new ParkingLotReposetory();
-        TicketReposetory ticketReposetory = new TicketReposetory();
-        VehicleReposetory vehicleReposetory = new VehicleReposetory();
-        SpotAssignmentStrategy spotAssignmentStrategy = new RandomSpotAssignmentStrategy();
+        CommandRegistry commandRegistry = new CommandRegistry();
+        Scanner sc = new Scanner(System.in);
 
-
-        TicketService ticketService = new TicketService(gateReposetory,vehicleReposetory,spotAssignmentStrategy,parkingLotReposetory,ticketReposetory);
-
-
-
-        TicketController ticketController = new TicketController(ticketService);
-        System.out.println("Application started has on port : 8080");
+        while (true) {
+            System.out.println("Do the task you want to do");
+            String input = sc.next();
+            commandRegistry.execute(input);
+        }
     }
 }

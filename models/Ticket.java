@@ -1,5 +1,6 @@
 package ParkingLot.models;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Ticket extends BaseModel{
@@ -7,7 +8,17 @@ public class Ticket extends BaseModel{
     private Vehicle vehicle;
     private Gate gate;
     private Operator operator;
-    private Date entryTime;
+    private LocalDateTime entryTime;
+    private ParkingLot parkingLot;
+
+
+    public ParkingLot getParkingLot() {
+        return parkingLot;
+    }
+
+    public void setParkingLot(ParkingLot parkingLot) {
+        this.parkingLot = parkingLot;
+    }
 
     public ParkingSpot getParkingSpot() {
 
@@ -42,11 +53,11 @@ public class Ticket extends BaseModel{
         this.operator = operator;
     }
 
-    public Date getEntryTime() {
+    public LocalDateTime getEntryTime() {
         return entryTime;
     }
 
-    public void setEntryTime(Date entryTime) {
+    public void setEntryTime(LocalDateTime entryTime) {
         this.entryTime = entryTime;
     }
 }

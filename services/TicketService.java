@@ -3,12 +3,10 @@ package ParkingLot.services;
 import ParkingLot.exceptions.InvalidGateException;
 import ParkingLot.exceptions.NoAvailableParkingSpotException;
 import ParkingLot.models.*;
-import ParkingLot.reposetories.GateReposetory;
-import ParkingLot.reposetories.ParkingLotReposetory;
-import ParkingLot.reposetories.TicketReposetory;
-import ParkingLot.reposetories.VehicleReposetory;
+import ParkingLot.reposetories.*;
 import ParkingLot.strategies.spotAssignmentStrategy.SpotAssignmentStrategy;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
@@ -19,11 +17,13 @@ public class TicketService {
     private ParkingLotReposetory parkingLotReposetory;
     private TicketReposetory ticketReposetory;
 
+
     public TicketService(GateReposetory gateReposetory,
                          VehicleReposetory vehicleReposetory,
                          SpotAssignmentStrategy spotAssignmentStrategy,
                          ParkingLotReposetory parkingLotReposetory,
                          TicketReposetory ticketReposetory) {
+
         this.gateReposetory = gateReposetory;
         this.vehicleReposetory = vehicleReposetory;
         this.spotAssignmentStrategy = spotAssignmentStrategy;
@@ -32,20 +32,27 @@ public class TicketService {
 
     }
 
-    public Ticket generateTicket(String vehicleNo, VehicleType vehicleType, Long gateId) throws InvalidGateException, NoAvailableParkingSpotException {
+
+
+    public Ticket generateTicket(String vehicleNo, VehicleType vehicleType,Long parkingLotId) throws InvalidGateException, NoAvailableParkingSpotException {
         // Vehicle check if present in DB and get otherwise create
         // Gate check in database otherwise exception throw
         // operator from gate
         // parking spot from strategy
 
 
-        // finding gate in the reposetory or Database, if not fount throw exception
-           Optional<Gate> gateOptional= gateReposetory.findGateById(gateId);
-           if (gateOptional.isEmpty()){
-               throw new InvalidGateException();
-           }
-           Gate gate = gateOptional.get();
+        // finding ParkingLot in the reposetory or database by gate, if not found throw exception
+        ParkingLot parkingLot;
+        Optional<ParkingLot> parkingLotOptional = parkingLotReposetory.getParkingLotById(parkingLotId);
+        if(parkingLotOptional.isEmpty()){
+            throw new RuntimeException();
+        }else {
+            parkingLot = parkingLotOptional.get();
+        }
 
+
+        // finding entry gate by parking lot
+        Gate gate = parkingLot.getGates().get(0);
 
 
        // finding Current operator on the gate we found from the reposetory
@@ -66,15 +73,6 @@ public class TicketService {
         }
 
 
-      // finding ParkingLot in the reposetory or database by gate, if not found throw exception
-        ParkingLot parkingLot;
-        Optional<ParkingLot> parkingLotOptional = parkingLotReposetory.getParkingLotOfGate(gate);
-        if(parkingLotOptional.isEmpty()){
-            throw new RuntimeException();
-        }else {
-            parkingLot = parkingLotOptional.get();
-        }
-
 
       // finding Parking spot in the spot assignment strategy
         ParkingSpot parkingSpot;
@@ -88,8 +86,9 @@ public class TicketService {
 
      // generate ticket, and save it in the reposetory and return it to the controller
         Ticket ticket = new Ticket();
+        ticket.setParkingLot(parkingLot);
         ticket.setGate(gate);
-        ticket.setEntryTime(new Date());
+        ticket.setEntryTime(LocalDateTime.now());
         ticket.setOperator(operator);
         ticket.setVehicle(vehicle);
         ticket.setParkingSpot(parkingSpot);

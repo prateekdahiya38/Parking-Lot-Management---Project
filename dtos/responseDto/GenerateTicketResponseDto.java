@@ -1,11 +1,35 @@
-package ParkingLot.DTOs;
+package ParkingLot.dtos.responseDto;
+
+import ParkingLot.dtos.ResponseStatus;
+
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class GenerateTicketResponseDto {
     private Long ticketID;
     private int spotNo;
     private String operatorName;
+    private LocalDateTime time;
     private String message;
     private ResponseStatus responseStatus;
+    private int gateNo;
+
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+
+    public int getGateNo() {
+        return gateNo;
+    }
+
+    public void setGateNo(int gateNo) {
+        this.gateNo = gateNo;
+    }
 
     public ResponseStatus getResponseStatus() {
         return responseStatus;

@@ -2,13 +2,14 @@ package ParkingLot.reposetories;
 
 import ParkingLot.models.Vehicle;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 
 public class VehicleReposetory {
 
-    Map<String,Vehicle> vehicles= new TreeMap<>();
+    Map<String,Vehicle> vehicles= new HashMap<>();
 
     public Optional<Vehicle> findVeicleByVehicleNo(String vehicleNo){
         if (vehicles.containsKey(vehicleNo)){
