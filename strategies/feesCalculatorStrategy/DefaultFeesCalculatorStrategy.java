@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 public class DefaultFeesCalculatorStrategy implements FeesCalculatorStrategy{
-    private static final double BIKE_PRICE_PER_MIN = 0.33;
-    private static final double CAR_PRICE_PER_MIN = 1.0;
+    private static final double BIKE_PRICE_PER_MIN = 0.50;
+    private static final double CAR_PRICE_PER_MIN = 2.0;
 
 
     @Override

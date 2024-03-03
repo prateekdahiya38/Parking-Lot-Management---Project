@@ -57,6 +57,8 @@ public class InitialisationCommand implements Command {
         request.setNoOfSpots(noOfSpots);
         InitialiseParkingLotResponseDto response = initialiseParkingLotController.createParkingLot(request);
         System.out.println("Your Parking Lot is initialised, Your Parking Id is :" + response.getParkingLotId());
+        System.out.println("##################################################################################");
+        System.out.println();
     }
 
 }

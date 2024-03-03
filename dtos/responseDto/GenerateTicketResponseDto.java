@@ -5,7 +5,7 @@ import ParkingLot.dtos.ResponseStatus;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class GenerateTicketResponseDto {
+ public class GenerateTicketResponseDto {
     private Long ticketID;
     private int spotNo;
     private String operatorName;
